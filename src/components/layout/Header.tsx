@@ -52,6 +52,10 @@ export function Header() {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
+    // Derived classes for text colors
+    const textColorClass = isScrolled ? "text-stone-900" : "text-white";
+    const navHoverClass = "hover:text-[var(--color-primary)]";
+
     return (
         <header
             className={cn(
@@ -61,7 +65,7 @@ export function Header() {
         >
             <div className="container-custom flex items-center justify-between">
                 {/* Logo */}
-                <Link href="/" className="text-2xl text-black font-bold tracking-tight font-[family-name:var(--font-outfit)] relative z-50">
+                <Link href="/" className={cn("text-2xl font-bold tracking-tight font-[family-name:var(--font-outfit)] relative z-50 transition-colors", textColorClass)}>
                     Akllyl
                 </Link>
 
@@ -76,7 +80,11 @@ export function Header() {
                         >
                             <Link
                                 href={item.href}
-                                className="flex items-center text-sm font-medium hover:text-[var(--color-primary)] transition-colors"
+                                className={cn(
+                                    "flex items-center text-sm font-medium transition-colors",
+                                    textColorClass,
+                                    navHoverClass
+                                )}
                                 onClick={(e) => { if (item.children) e.preventDefault() }}
                             >
                                 {item.label}
@@ -95,7 +103,7 @@ export function Header() {
                                         <Link
                                             key={child.label}
                                             href={child.href}
-                                            className="block px-4 py-3 text-sm hover:bg-stone-50 hover:text-[var(--color-primary)] transition-colors border-b border-stone-50 last:border-0"
+                                            className="block px-4 py-3 text-sm text-stone-900 hover:bg-stone-50 hover:text-[var(--color-primary)] transition-colors border-b border-stone-50 last:border-0"
                                         >
                                             {child.label}
                                         </Link>
@@ -116,7 +124,7 @@ export function Header() {
 
                 {/* Mobile Toggle */}
                 <button
-                    className="md:hidden p-2 relative z-50"
+                    className={cn("md:hidden p-2 relative z-50 transition-colors", mobileMenuOpen ? "text-stone-900" : textColorClass)}
                     onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 >
                     {mobileMenuOpen ? <X /> : <Menu />}
@@ -131,7 +139,7 @@ export function Header() {
                             <div key={item.label}>
                                 <Link
                                     href={item.href}
-                                    className="block text-2xl font-bold py-2 border-b border-stone-100 font-[family-name:var(--font-outfit)]"
+                                    className="block text-2xl font-bold py-2 border-b border-stone-100 font-[family-name:var(--font-outfit)] text-stone-900"
                                     onClick={() => setMobileMenuOpen(false)}
                                 >
                                     {item.label}
